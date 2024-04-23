@@ -9,7 +9,6 @@ import { FooterComponent } from './components/layout/footer/footer.component';
 import { HomeComponent } from './components/home//home.component';
 
 import { NotFoundComponent } from './components/errors/not-found/not-found.component';
-import { ValidationMessagesComponent } from './components/errors/validation-messages/validation-messages.component';
 import { TasksComponent } from './components/tasks/tasks.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
@@ -22,7 +21,6 @@ import { HttpClientModule } from '@angular/common/http';
     HomeComponent,
     TasksComponent,
     NotFoundComponent,
-    ValidationMessagesComponent,
   ],
   imports: [
     BrowserModule,
