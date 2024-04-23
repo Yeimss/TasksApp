@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LoginComponent } from '../../components/login/login.component';
 import { RegisterComponent } from '../../components/register/register.component';
-import { RouterModule } from '@angular/router';
+import { AccountRoutingModule } from './account-routing.module';
 
 
 
@@ -13,7 +13,7 @@ import { RouterModule } from '@angular/router';
   ],
   imports: [
     CommonModule,
-    RouterModule
+    AccountRoutingModule
   ]
 })
 export class AccountModule { }
