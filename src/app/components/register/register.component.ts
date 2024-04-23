@@ -30,13 +30,12 @@ export class RegisterComponent implements OnInit {
   }
 
   validarFormato(control:any) {
-    if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?& ."])[A-Za-z\d@$!%*?&]{8,20}$/.test(control.value)) {
+    if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?& ."])[A-Za-z\d@$!%*?& .]{8,20}$/.test(control.value)) {
       return { formatoInvalido: true };
     }
     return null;
   }
-  get f() { return this.registerForm.controls; }
-  
+    
   register(){
     this.submitted = true;
     this.errorMessage = [];
@@ -44,7 +43,6 @@ export class RegisterComponent implements OnInit {
     if(this.registerForm.valid){
       this.accountService.register(this.registerForm.value).subscribe({
         next:(response) =>{
-          console.log(response)
         },error: error => {
           console.log(error)
         }
