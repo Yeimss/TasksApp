@@ -32,7 +32,7 @@ export class TasksService {
     return this.http.post<TaskRessponse>(`${environment.appUrl}/api/Tasks/userDuties`, datos, { headers });
   }
 
-  setTask(datos: TaskRessponse) {
+  setTask(datos: TaskRequest) {
     var token = this.getToken()
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',

@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AccountService } from '../../services/account.service';
 import { LoginResponse } from '../../models/LoginResponse';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -44,6 +45,7 @@ export class LoginComponent implements OnInit{
         next:(response) =>{
           this.router .navigateByUrl('/');
         },error: error => {
+          Swal.fire("No se pudo iniciar sesión", "", "info");
           console.log(error);
         }
       })

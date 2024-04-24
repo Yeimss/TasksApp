@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AccountService } from '../../services/account.service';
-import { EmailValidator, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { error } from 'console';
-import { first } from 'rxjs';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-register',
@@ -51,6 +50,7 @@ export class RegisterComponent implements OnInit {
           })
         },error: error => {
           console.log(error)
+          Swal.fire("No se pudo registar", "es posible que el user ya esté registrado", "info");
         }
       })
     }

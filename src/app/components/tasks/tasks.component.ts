@@ -23,6 +23,7 @@ export class TasksComponent implements OnInit{
   
   public taskRequest: TaskRequest | undefined 
   public taskResponse: any 
+  public mostrarTabla = false;
   ngOnInit(): void {
     this.getTasks()
     this.initializeForm()
@@ -49,7 +50,8 @@ export class TasksComponent implements OnInit{
 
     this.taskService.getTasks(tr).subscribe({
       next: res=>{
-        this.taskResponse=res
+        this.taskResponse=res;
+        this.mostrarTabla =  this.taskResponse.length === 0 ? false : true;
       },error:err=>{
         console.log(err)
       }
@@ -83,8 +85,9 @@ export class TasksComponent implements OnInit{
       this.taskService.setTask(this.taskForm.value).subscribe({
         next:(response) =>{
           Swal.fire("Tarea guardada", "", "success");
-          this.router.navigateByUrl('/tasks');
+          this.router.navigateByUrl('/');
         },error: error => {
+          Swal.fire("No se pudo guardar la tarea", "", "info");
           console.log(error);
         }
       })
@@ -99,6 +102,7 @@ export class TasksComponent implements OnInit{
           Swal.fire("Tarea actualizada", "", "success");
           this.router.navigateByUrl('/');
         },error: error => {
+          Swal.fire("No se pudo actualizar la tarea", "", "info");
           console.log(error);
         }
       })
@@ -126,7 +130,6 @@ export class TasksComponent implements OnInit{
       confirmButtonText: "Eliminar",
       denyButtonText: `No eliminar`
     }).then((result) => {
-      /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
         this.eliminar(item)
       } else if (result.isDenied) {

@@ -14,10 +14,10 @@ export class AppComponent implements OnInit{
    
 
   ngOnInit(): void {
-    this.refreshUser();
+    //this.refreshUser();
   }
 
-  private refreshUser(refreshToken:RefreshToken = {}  ) {
+  /* private refreshUser(refreshToken:RefreshToken = {}  ) {
     const token = this.accountService.getRefreshToken();
     if(token){
       refreshToken.refreshToken = token;
@@ -29,7 +29,7 @@ export class AppComponent implements OnInit{
         }
       })
     }
-  }
+  } */
 
 
 
