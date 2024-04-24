@@ -7,6 +7,7 @@ import { TaskRessponse } from '../../models/taskModels/TaskResponse';
 //import 'sweetalert2/src/sweetalert2.scss';
 import Swal from 'sweetalert2';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tasks',
@@ -17,7 +18,8 @@ export class TasksComponent implements OnInit{
 
   taskForm:FormGroup = new FormGroup({});
   constructor(public accountService:AccountService,
-    public taskService:TasksService, private formBuilder:FormBuilder ){ }
+  public taskService:TasksService, private formBuilder:FormBuilder,
+  public router:Router){ }
   
   public taskRequest: TaskRequest | undefined 
   public taskResponse: any 
@@ -53,6 +55,7 @@ export class TasksComponent implements OnInit{
       }
     })
   }
+
   mapUpdateData(item:TaskRessponse){
     if(item.dueDate !== undefined && item.dueDate !== null){
       let fecha :Date = new Date(item.dueDate);
@@ -70,7 +73,25 @@ export class TasksComponent implements OnInit{
     this.taskForm.get('email')?.setValue(item.email)
   }
 
-  editar(){
+  resetForm(){
+    this.taskForm.reset();
+  }
+  
+  create(){
+    this.taskForm.get('email')?.setValue(this.accountService.getEmail())
+    if(this.taskForm.valid){
+      this.taskService.setTask(this.taskForm.value).subscribe({
+        next:(response) =>{
+          Swal.fire("Tarea guardada", "", "success");
+          this.router.navigateByUrl('/tasks');
+        },error: error => {
+          console.log(error);
+        }
+      })
+    }
+  }
+
+  update(){
 
   }
 
@@ -101,7 +122,7 @@ export class TasksComponent implements OnInit{
     this.taskForm = this.formBuilder.group({
       id: ['', []],
       title: ['', [Validators.required]],
-      detail: ['', [Validators.requiredTrue]],
+      detail: ['', [Validators.required]],
       dueDate: ['', [Validators.required]],
       isComplete: ['', []],
       email: ['',[]]

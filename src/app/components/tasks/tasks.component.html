@@ -46,7 +46,7 @@
     <div class="container mb-5 mb-md-6 mb-xl-10">
       <div class="row justify-content-md-center">
         <div class="col-12 col-md-10 col-lg-9 col-xl-8 col-xxl-7 text-center">
-          <button class="btn btn-outline-dark me-1 w-100" data-bs-toggle="modal" data-bs-target="#modalCrear">
+          <button class="btn btn-outline-dark me-1 w-100" data-bs-toggle="modal" data-bs-target="#modalCrear" (click)="resetForm()">
             Crear tarea
           </button>
         </div>
@@ -62,7 +62,7 @@
         <button type="button" class="btn-close" (click)="cerrarModal()" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body container">
-          <form [formGroup]="taskForm" (ngSubmit)="editar()" autocomplete="off">
+          <form [formGroup]="taskForm" (ngSubmit)="update()" autocomplete="off">
             <div class="row gy-3 overflow-hidden">
               <div class="col-12">
                 <div class="form-floating mb-3">
@@ -84,13 +84,13 @@
               </div>
               <div class="col-12">
                 <div class="form-check form-switch">
-                  <input class="form-check-input"  formControlName="isComplete" type="checkbox" role="switch" id="flexSwitchCheckChecked">
+                  <input class="form-check-input"  formControlName="isComplete" value="false" type="checkbox" role="switch" id="flexSwitchCheckChecked">
                   <label class="form-check-label" for="flexSwitchCheckChecked">Tarea finalizada</label>
                 </div>
               </div>
               <div class="col-12">
                 <div class="d-grid">
-                  <button class="btn btn-dark btn-lg" type="submit">Guardar</button>
+                  <button class="btn btn-dark btn-lg" data-bs-dismiss="modal"  type="submit">Guardar</button>
                 </div>
               </div>
             </div>
@@ -111,7 +111,7 @@
         <button type="button" class="btn-close" (click)="cerrarModal()" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body container">
-          <form [formGroup]="taskForm" (ngSubmit)="editar()" autocomplete="off">
+          <form [formGroup]="taskForm" (ngSubmit)="create()" autocomplete="off">
             <div class="row gy-3 overflow-hidden">
               <div class="col-12">
                 <div class="form-floating mb-3">
@@ -133,13 +133,13 @@
               </div>
               <div class="col-12">
                 <div class="form-check form-switch">
-                  <input class="form-check-input"  formControlName="isComplete" type="checkbox" role="switch" id="flexSwitchCheckChecked">
+                  <input class="form-check-input"  formControlName="isComplete" value="false" type="checkbox" role="switch" id="flexSwitchCheckChecked">
                   <label class="form-check-label" for="flexSwitchCheckChecked">Tarea finalizada</label>
                 </div>
               </div>
               <div class="col-12">
                 <div class="d-grid">
-                  <button class="btn btn-dark btn-lg" type="submit">Guardar</button>
+                  <button class="btn btn-dark btn-lg" data-bs-dismiss="modal" type="submit">Guardar</button>
                 </div>
               </div>
             </div>
