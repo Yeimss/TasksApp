@@ -82,7 +82,7 @@ export class AccountService {
       return ''
     }
   }
-  getRefreshToken(){
+  /* getRefreshToken(){
     const key = localStorage.getItem(environment.userKey)
     if(key){
       const user:LogedUser = JSON.parse(key);
@@ -90,7 +90,7 @@ export class AccountService {
     }else{
       return null
     }
-  }
+  } */
   getBearerToken(){
     const key = localStorage.getItem(environment.userKey)
     var tokenType = "";

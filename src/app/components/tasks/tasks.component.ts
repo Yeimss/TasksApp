@@ -23,6 +23,7 @@ export class TasksComponent implements OnInit{
   
   public taskRequest: TaskRequest | undefined 
   public taskResponse: any 
+  public mostrarTabla = false;
   ngOnInit(): void {
     this.getTasks()
     this.initializeForm()
@@ -49,7 +50,8 @@ export class TasksComponent implements OnInit{
 
     this.taskService.getTasks(tr).subscribe({
       next: res=>{
-        this.taskResponse=res
+        this.taskResponse=res;
+        this.mostrarTabla =  this.taskResponse.length === 0 ? false : true;
       },error:err=>{
         console.log(err)
       }
@@ -69,7 +71,7 @@ export class TasksComponent implements OnInit{
     this.taskForm.get('id')?.setValue(item.id)
     this.taskForm.get('title')?.setValue(item.title)
     this.taskForm.get('detail')?.setValue(item.detail)
-    this.taskForm.get('isComplete')?.setValue(item.isComplete ? true : false)
+    this.taskForm.get('isCompleted')?.setValue(item.isCompleted ? true : false)
     this.taskForm.get('email')?.setValue(item.email)
   }
 
@@ -83,8 +85,9 @@ export class TasksComponent implements OnInit{
       this.taskService.setTask(this.taskForm.value).subscribe({
         next:(response) =>{
           Swal.fire("Tarea guardada", "", "success");
-          this.router.navigateByUrl('/tasks');
+          this.router.navigateByUrl('/');
         },error: error => {
+          Swal.fire("No se pudo guardar la tarea", "", "info");
           console.log(error);
         }
       })
@@ -92,11 +95,31 @@ export class TasksComponent implements OnInit{
   }
 
   update(){
-
+    this.taskForm.get('email')?.setValue(this.accountService.getEmail())
+    if(this.taskForm.valid){
+      this.taskService.updateTask(this.taskForm.value).subscribe({
+        next:(response) =>{
+          Swal.fire("Tarea actualizada", "", "success");
+          this.router.navigateByUrl('/');
+        },error: error => {
+          Swal.fire("No se pudo actualizar la tarea", "", "info");
+          console.log(error);
+        }
+      })
+    }
   }
 
-  eliminar(item:TaskRessponse){
 
+  eliminar(item:TaskRessponse){
+    this.taskService.deleteTask(item.id).subscribe({
+      next:(response) =>{
+        Swal.fire("Tarea eliminada exitosamente", "", "success");
+        this.router.navigateByUrl('/');
+      },error: error => {
+        console.log(error);
+      }
+    })
+    
   }
 
   confirmarEliminar(item:TaskRessponse){
@@ -107,7 +130,6 @@ export class TasksComponent implements OnInit{
       confirmButtonText: "Eliminar",
       denyButtonText: `No eliminar`
     }).then((result) => {
-      /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
         this.eliminar(item)
       } else if (result.isDenied) {
@@ -124,7 +146,7 @@ export class TasksComponent implements OnInit{
       title: ['', [Validators.required]],
       detail: ['', [Validators.required]],
       dueDate: ['', [Validators.required]],
-      isComplete: ['', []],
+      isCompleted: ['', []],
       email: ['',[]]
     })
   }

@@ -8,7 +8,7 @@
     </div>
 
 
-    <div class="container mb-5 mb-md-6 mb-xl-10" *ngIf="taskResponse != undefined and taskResponse != []">
+    <div class="container mb-5 mb-md-6 mb-xl-10" *ngIf="mostrarTabla">
       <div class="row justify-content-md-center">
         <div class="col-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12 text-center">
           <table class="table">
@@ -28,7 +28,7 @@
                 <td>{{item.title}}</td>
                 <td>{{item.detail}}</td>
                 <td>{{item.dueDate | date : 'longDate'}}</td>
-                <td>{{item.isComplete ? "Sí" : "No"}}</td>
+                <td>{{item.isCompleted ? "Sí" : "No"}}</td>
                 <td>
                   <button class="btn btn-outline-dark me-1" data-bs-toggle="modal" data-bs-target="#modalEditar" (click)="mapUpdateData(item)">
                     <img src="../../../assets/img/editing.png" width="20px" alt="editar">
@@ -67,24 +67,27 @@
               <div class="col-12">
                 <div class="form-floating mb-3">
                   <input formControlName="title" type="text" class="form-control" name="title" id="title" required>
-                  <label for="title" class="form-label">title</label>
+                  <label for="title" class="form-label">Titulo</label>
+                  <span class="text-danger" *ngIf="taskForm.get('title')?.hasError('required')">el titulo es requerido</span>
                 </div>
               </div>
               <div class="col-12">
                 <div class="form-floating mb-3">
                   <input formControlName="detail" type="text" class="form-control" name="detail" id="detail" required>
-                  <label for="detail" class="form-label">Descripcion</label>
+                  <label for="detail" class="form-label">Descripción</label>
+                  <span class="text-danger" *ngIf="taskForm.get('detail')?.hasError('required')">La descripción es requerida</span>
                 </div>
               </div>
               <div class="col-12">
                 <div class="form-floating mb-3">
                   <input formControlName="dueDate" type="date" class="form-control" name="detail" id="detail" required>
                   <label for="dueDate" class="form-label">Fecha de vencimiento</label>
+                  <span class="text-danger" *ngIf="taskForm.get('dueDate')?.hasError('required')">La fecha es requerida</span>
                 </div>
               </div>
               <div class="col-12">
                 <div class="form-check form-switch">
-                  <input class="form-check-input"  formControlName="isComplete" value="false" type="checkbox" role="switch" id="flexSwitchCheckChecked">
+                  <input class="form-check-input"  formControlName="isCompleted" value="false" type="checkbox" role="switch" id="flexSwitchCheckChecked">
                   <label class="form-check-label" for="flexSwitchCheckChecked">Tarea finalizada</label>
                 </div>
               </div>
@@ -117,23 +120,26 @@
                 <div class="form-floating mb-3">
                   <input formControlName="title" type="text" class="form-control" name="title" id="title" required>
                   <label for="title" class="form-label">title</label>
+                  <span class="text-danger" *ngIf="taskForm.get('title')?.hasError('required')">el titulo es requerido</span>
                 </div>
               </div>
               <div class="col-12">
                 <div class="form-floating mb-3">
                   <input formControlName="detail" type="text" class="form-control" name="detail" id="detail" required>
                   <label for="detail" class="form-label">Descripcion</label>
+                  <span class="text-danger" *ngIf="taskForm.get('detail')?.hasError('required')">La descripción es requerida</span>
                 </div>
               </div>
               <div class="col-12">
                 <div class="form-floating mb-3">
                   <input formControlName="dueDate" type="date" class="form-control" name="detail" id="detail" required>
                   <label for="dueDate" class="form-label">Fecha de vencimiento</label>
+                  <span class="text-danger" *ngIf="taskForm.get('dueDate')?.hasError('required')">La fecha es requerida</span>
                 </div>
               </div>
               <div class="col-12">
                 <div class="form-check form-switch">
-                  <input class="form-check-input"  formControlName="isComplete" value="false" type="checkbox" role="switch" id="flexSwitchCheckChecked">
+                  <input class="form-check-input"  formControlName="isCompleted" value="false" type="checkbox" role="switch" id="flexSwitchCheckChecked">
                   <label class="form-check-label" for="flexSwitchCheckChecked">Tarea finalizada</label>
                 </div>
               </div>
