@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AccountService } from '../../services/account.service';
 import { LoginResponse } from '../../models/LoginResponse';
 import { isObject } from 'util';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -17,7 +18,7 @@ export class LoginComponent implements OnInit{
 
 
   constructor(private accountService: AccountService,
-  private formBuilder : FormBuilder){}
+  private formBuilder : FormBuilder, private router:Router){}
   ngOnInit(): void {
     this.initializeForm();
   }
@@ -43,6 +44,7 @@ export class LoginComponent implements OnInit{
     if(this.loginForm.valid){
       this.accountService.login(this.loginForm.value).subscribe({
         next:(response) =>{
+          this.router .navigateByUrl('/');
         },error: error => {
           console.log(error);
         }

@@ -3,6 +3,7 @@ import { AccountService } from '../../services/account.service';
 import { EmailValidator, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { error } from 'console';
 import { first } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -16,7 +17,7 @@ export class RegisterComponent implements OnInit {
 
 
   constructor(private accountService: AccountService,
-  private formBuilder : FormBuilder){}
+  private formBuilder : FormBuilder, private router:Router){}
 
   ngOnInit(): void {
     this.initializeForm();
@@ -43,6 +44,11 @@ export class RegisterComponent implements OnInit {
     if(this.registerForm.valid){
       this.accountService.register(this.registerForm.value).subscribe({
         next:(response) =>{
+          this.accountService.login(this.registerForm.value).subscribe({
+            next: res =>{
+              this.router .navigateByUrl('/');
+            },error : err => {}
+          })
         },error: error => {
           console.log(error)
         }
