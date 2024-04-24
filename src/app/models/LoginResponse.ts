@@ -3,4 +3,9 @@ export interface LoginResponse{
     accessToken: string,
     expiresIn: 0,
     refreshToken: string
-  }
+}
+
+export interface LogedUser{
+  tokenInfo: LoginResponse,
+  emailUser: string
+}

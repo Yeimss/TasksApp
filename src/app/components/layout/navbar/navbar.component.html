@@ -2,15 +2,18 @@
     <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">
-                <label style="font-size: 50px; margin-top: -28px; margin-bottom: -12px;">🗊</label>
+                <label style="font-size: 50px; margin-top: -28px; margin-bottom: -12px;">🗊<label style="font-size: 30px;">Tareas</label></label>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarNavAltMarkup">
-                <div class="navbar-nav">
+                <div class="navbar-nav" *ngIf="(accountService.user$ | async) !== null">
                   <a class="nav-link" aria-current="page" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Home</a>
-                  <a class="nav-link" routerLink="/tasks" routerLinkActive="active">Tareas</a>
+                  <a class="btn btn-outline-light mx-2"  (click)="logout()">Cerrar sesión</a>
+                  <a href=""></a>
+                </div>
+                <div class="navbar-nav" *ngIf="(accountService.user$ | async) === null">
                   <a class="btn btn-outline-light mx-2"  routerLink="/account/login" routerLinkActive="active">Iniciar sesión</a>
                   <a class="btn btn-outline-light mx-2" routerLink="/account/register" routerLinkActive="active">Registrarse</a>
                 </div>
