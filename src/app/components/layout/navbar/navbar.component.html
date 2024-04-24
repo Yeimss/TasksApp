@@ -10,8 +10,8 @@
             <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarNavAltMarkup">
                 <div class="navbar-nav" *ngIf="(accountService.user$ | async) !== null">
                   <a class="nav-link" aria-current="page" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Home</a>
+                  <a class="nav-link" aria-current="page" routerLink="/tasks" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Tasks</a>
                   <a class="btn btn-outline-light mx-2"  (click)="logout()">Cerrar sesión</a>
-                  <a href=""></a>
                 </div>
                 <div class="navbar-nav" *ngIf="(accountService.user$ | async) === null">
                   <a class="btn btn-outline-light mx-2"  routerLink="/account/login" routerLinkActive="active">Iniciar sesión</a>

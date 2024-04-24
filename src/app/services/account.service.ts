@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Register } from '../models/Register';
 import { environment } from '../../environments/environment.development';
 import { Login, RefreshToken } from '../models/Login';
-import { LoginResponse } from '../models/LoginResponse';
+import { LogedUser, LoginResponse } from '../models/LoginResponse';
 import { ReplaySubject, map, of } from 'rxjs';
 import { Router } from '@angular/router';
 
@@ -12,7 +12,8 @@ import { Router } from '@angular/router';
 })
 
 export class AccountService {
-  private logedUser = new ReplaySubject<LoginResponse | null>(1);
+  private logedUser = new ReplaySubject<LogedUser | null>(1);
+
   user$ = this.logedUser.asObservable();
   constructor(private http:HttpClient, private router:Router) { }
 
@@ -20,7 +21,11 @@ export class AccountService {
     return this.http.post<LoginResponse>(`${environment.appUrl}/identity/register`, refreshToken).pipe(
       map((user: LoginResponse) => {
         if(user){
-          this.setUser(user);
+          let usuarioLogueado : LogedUser = {
+            tokenInfo: user,
+            emailUser: this.getEmail(),
+          } 
+          this.setUserRefresh(usuarioLogueado);
           return user;
         }
         return null;
@@ -35,8 +40,12 @@ export class AccountService {
   login(model: Login){
     return this.http.post<LoginResponse>(`${environment.appUrl}/identity/login`, model).pipe(
       map((user: LoginResponse) => {
+        let usuarioLogueado : LogedUser = {
+          tokenInfo: user,
+          emailUser: model.email,
+        } 
         if(user){
-          this.setUser(user);
+          this.setUser(usuarioLogueado);
           return user;
         }
         return null;
@@ -44,6 +53,20 @@ export class AccountService {
     );
   }
 
+  setUser(user: LogedUser){
+    localStorage.setItem(environment.userKey,JSON.stringify(user));
+    this.logedUser.next(user);
+    this.user$.subscribe({
+      next: response => {  }
+    })
+  }
+  setUserRefresh(user: LogedUser){
+    localStorage.setItem(environment.userKey,JSON.stringify(user));
+    this.logedUser.next(user);
+    this.user$.subscribe({
+      next: response => {  }
+    })
+  }
   logout(){
     localStorage.removeItem(environment.userKey);
     this.logedUser.next(null);
@@ -53,8 +76,8 @@ export class AccountService {
   getToken(){
     const key = localStorage.getItem(environment.userKey)
     if(key){
-      const user:LoginResponse = JSON.parse(key);
-      return user.accessToken;
+      const user:LogedUser = JSON.parse(key);
+      return user.tokenInfo.accessToken;
     }else{
       return null
     }
@@ -62,19 +85,21 @@ export class AccountService {
   getRefreshToken(){
     const key = localStorage.getItem(environment.userKey)
     if(key){
-      const user:LoginResponse = JSON.parse(key);
-      return user.refreshToken;
+      const user:LogedUser = JSON.parse(key);
+      return user.tokenInfo.refreshToken;
     }else{
       return null
     }
   }
-
-  setUser(user: LoginResponse){
-    localStorage.setItem(environment.userKey,JSON.stringify(user));
-    this.logedUser.next(user);
-
-    this.user$.subscribe({
-      next: response => {  }
-    })
+  getEmail(){
+    const key = localStorage.getItem(environment.userKey)
+    if(key){
+      const user:LogedUser = JSON.parse(key);
+      return user.emailUser;
+    }else{
+      return ''
+    }
   }
+
+  
 }
