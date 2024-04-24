@@ -77,9 +77,9 @@ export class AccountService {
     const key = localStorage.getItem(environment.userKey)
     if(key){
       const user:LogedUser = JSON.parse(key);
-      return user.tokenInfo.accessToken;
+      return (user.tokenInfo.accessToken == undefined) ? '' : user.tokenInfo.accessToken;
     }else{
-      return null
+      return ''
     }
   }
   getRefreshToken(){
@@ -91,6 +91,19 @@ export class AccountService {
       return null
     }
   }
+  getBearerToken(){
+    const key = localStorage.getItem(environment.userKey)
+    var tokenType = "";
+    var token = "";
+    if(key){
+      const user:LogedUser = JSON.parse(key);
+      tokenType = (user.tokenInfo.tokenType == undefined)?'':user.tokenInfo.tokenType;
+      token = (user.tokenInfo.accessToken == undefined)?'':user.tokenInfo.accessToken;
+    }
+    let headers = new HttpHeaders();
+    headers = headers.set('Authorization', tokenType +' '+tokenType)
+    return headers;
+  }
   getEmail(){
     const key = localStorage.getItem(environment.userKey)
     if(key){
@@ -100,6 +113,7 @@ export class AccountService {
       return ''
     }
   }
+
 
   
 }

@@ -2,7 +2,8 @@
     <div class="container mb-5 mb-md-6 mb-xl-10">
       <div class="row justify-content-md-center">
         <div class="col-12 col-md-10 col-lg-9 col-xl-8 col-xxl-7 text-center">
-          <h2 class="display-3 fw-bolder mb-4">You will get the <br>perfect <mark class="bsb-tpl-highlight bsb-tpl-highlight-yellow"><span class="bsb-tpl-font-hw display-1 text-accent fw-normal">resolutions</span></mark> with our proficient services.</h2>
+          <h2  *ngIf="(accountService.user$ | async) as user" class="display-3 fw-bolder mb-4">Bienvenido/a <br><mark class="bsb-tpl-highlight bsb-tpl-highlight-yellow">{{ obtenerNombreUsuario }}</mark> a esta app para gestionar tus tareas</h2>
+          <h2  *ngIf="(accountService.user$ | async) === null" class="display-3 fw-bolder mb-4">Bienvenido/a <br>a esta app para gestionar tus tareas</h2>
         </div>
       </div>
     </div>

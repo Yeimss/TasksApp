@@ -1,1 +1,9 @@
-<p>tasks works!</p>
+<section class=" bsb-section-py-xxl-1">
+    <div class="container mb-5 mb-md-6 mb-xl-10">
+        <div class="row justify-content-md-center">
+          <div class="col-12 col-md-10 col-lg-9 col-xl-8 col-xxl-7 text-center">
+            <h2  *ngIf="(accountService.user$ | async) as user" class="fw-bolder mb-4">Hola <mark class="bsb-tpl-highlight bsb-tpl-highlight-yellow">{{ obtenerNombreUsuario }}</mark>, estas son tus tareas: </h2>
+          </div>
+        </div>
+      </div>
+</section>

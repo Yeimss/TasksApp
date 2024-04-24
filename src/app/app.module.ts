@@ -11,7 +11,8 @@ import { HomeComponent } from './components/home//home.component';
 import { NotFoundComponent } from './components/errors/not-found/not-found.component';
 import { TasksComponent } from './components/tasks/tasks.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { CustomeInterceptor } from './services/custom.interceptor';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,12 @@ import { HttpClientModule } from '@angular/common/http';
     HttpClientModule,
   ],
   providers: [
-    provideClientHydration()
+    provideClientHydration(),
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: CustomeInterceptor,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })
