@@ -38,7 +38,6 @@ export class LoginComponent implements OnInit{
 
   login(){
     this.submitted = true;
-    this.errorMessage = [];
 
     if(this.loginForm.valid){
       this.accountService.login(this.loginForm.value).subscribe({
