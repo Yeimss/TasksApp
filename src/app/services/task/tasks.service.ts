@@ -36,16 +36,16 @@ export class TasksService {
     var token = this.getToken()
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
-      'Authorization': "Bearer "+token
+      'Authorization': "Bearer "+ token
     });
 
-    return this.http.post<TaskRessponse>(`${environment.appUrl}/api/Tasks/createDuty`, datos, { headers });
+    return this.http.post(`${environment.appUrl}/api/Tasks/createDuty`, datos, { headers });
   }
   updateTask(datos: TaskRequest) {
     var token = this.getToken()
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
-      'Authorization': "Bearer "+token
+      'Authorization': "Bearer "+ token
     });
 
     return this.http.put<DuttyResponse>(`${environment.appUrl}/api/Tasks/updateDuty`, datos, { headers });
@@ -54,7 +54,7 @@ export class TasksService {
     var token = this.getToken()
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
-      'Authorization': "Bearer "+token
+      'Authorization': "Bearer "+ token
     });
 
     // Realiza la solicitud HTTP POST con los encabezados personalizados

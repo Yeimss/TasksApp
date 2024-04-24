@@ -82,7 +82,14 @@ export class TasksComponent implements OnInit{
   create(){
     this.taskForm.get('email')?.setValue(this.accountService.getEmail())
     if(this.taskForm.valid){
-      this.taskService.setTask(this.taskForm.value).subscribe({
+      let datos :TaskRequest = {
+        title: this.taskForm.get('title')?.value,
+        detail: this.taskForm.get('detail')?.value,
+        dueDate: this.taskForm.get('dueDate')?.value,
+        isCompleted: (this.taskForm.get('isCompleted')?.value == null) ? false : this.taskForm.get('isCompleted')?.value,
+        email: this.taskForm.get('email')?.value,
+      }
+      this.taskService.setTask(datos).subscribe({
         next:(response) =>{
           Swal.fire("Tarea guardada", "", "success");
           this.router.navigateByUrl('/');
