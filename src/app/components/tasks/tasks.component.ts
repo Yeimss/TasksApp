@@ -69,7 +69,7 @@ export class TasksComponent implements OnInit{
     this.taskForm.get('id')?.setValue(item.id)
     this.taskForm.get('title')?.setValue(item.title)
     this.taskForm.get('detail')?.setValue(item.detail)
-    this.taskForm.get('isComplete')?.setValue(item.isComplete ? true : false)
+    this.taskForm.get('isCompleted')?.setValue(item.isCompleted ? true : false)
     this.taskForm.get('email')?.setValue(item.email)
   }
 
@@ -92,11 +92,30 @@ export class TasksComponent implements OnInit{
   }
 
   update(){
-
+    this.taskForm.get('email')?.setValue(this.accountService.getEmail())
+    if(this.taskForm.valid){
+      this.taskService.updateTask(this.taskForm.value).subscribe({
+        next:(response) =>{
+          Swal.fire("Tarea actualizada", "", "success");
+          this.router.navigateByUrl('/');
+        },error: error => {
+          console.log(error);
+        }
+      })
+    }
   }
 
-  eliminar(item:TaskRessponse){
 
+  eliminar(item:TaskRessponse){
+    this.taskService.deleteTask(item.id).subscribe({
+      next:(response) =>{
+        Swal.fire("Tarea eliminada exitosamente", "", "success");
+        this.router.navigateByUrl('/');
+      },error: error => {
+        console.log(error);
+      }
+    })
+    
   }
 
   confirmarEliminar(item:TaskRessponse){
@@ -124,7 +143,7 @@ export class TasksComponent implements OnInit{
       title: ['', [Validators.required]],
       detail: ['', [Validators.required]],
       dueDate: ['', [Validators.required]],
-      isComplete: ['', []],
+      isCompleted: ['', []],
       email: ['',[]]
     })
   }

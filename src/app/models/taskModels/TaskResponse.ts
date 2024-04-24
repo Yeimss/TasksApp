@@ -3,6 +3,12 @@ export interface TaskRessponse{
     title?:string,
     detail?:string,
     dueDate?: Date,
-    isComplete?: boolean,
+    isCompleted?: boolean,
     email?: string
+}
+export interface DuttyResponse{
+    title :string
+    message :string
+    operation :string
+    statusOperation : boolean 
 }

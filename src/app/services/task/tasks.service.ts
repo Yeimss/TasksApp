@@ -4,7 +4,7 @@ import { TaskRequest } from '../../models/taskModels/TaskRequest';
 import { environment } from '../../../environments/environment.development';
 import { AccountService } from '../account.service';
 import { LogedUser } from '../../models/LoginResponse';
-import { TaskRessponse } from '../../models/taskModels/TaskResponse';
+import { DuttyResponse, TaskRessponse } from '../../models/taskModels/TaskResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -39,40 +39,26 @@ export class TasksService {
       'Authorization': "Bearer "+token
     });
 
-    // Realiza la solicitud HTTP POST con los encabezados personalizados
     return this.http.post<TaskRessponse>(`${environment.appUrl}/api/Tasks/createDuty`, datos, { headers });
   }
   updateTask(datos: TaskRequest) {
-    const key = localStorage.getItem(environment.userKey)
-    var token = "";
-    if(key){
-      const user:LogedUser = JSON.parse(key);
-      token = (user.tokenInfo.accessToken == undefined) ? '' : user.tokenInfo.accessToken;
-    }
-    // Define los encabezados personalizados
+    var token = this.getToken()
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': "Bearer "+token
     });
 
-    // Realiza la solicitud HTTP POST con los encabezados personalizados
-    return this.http.post<TaskRessponse>(`${environment.appUrl}/api/Tasks/userDuties`, datos, { headers });
+    return this.http.put<DuttyResponse>(`${environment.appUrl}/api/Tasks/updateDuty`, datos, { headers });
   }
-  deleteTask(datos: TaskRequest) {
-    const key = localStorage.getItem(environment.userKey)
-    var token = "";
-    if(key){
-      const user:LogedUser = JSON.parse(key);
-      token = (user.tokenInfo.accessToken == undefined) ? '' : user.tokenInfo.accessToken;
-    }
-    // Define los encabezados personalizados
+  deleteTask(id:any) {
+    var token = this.getToken()
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': "Bearer "+token
     });
 
     // Realiza la solicitud HTTP POST con los encabezados personalizados
-    return this.http.post<TaskRessponse>(`${environment.appUrl}/api/Tasks/userDuties`, datos, { headers });
+    return this.http.delete<DuttyResponse>(`${environment.appUrl}/api/Tasks/deleteDuty?id=${id}`, {headers} );
   }
 
 }

@@ -28,7 +28,7 @@
                 <td>{{item.title}}</td>
                 <td>{{item.detail}}</td>
                 <td>{{item.dueDate | date : 'longDate'}}</td>
-                <td>{{item.isComplete ? "Sí" : "No"}}</td>
+                <td>{{item.isCompleted ? "Sí" : "No"}}</td>
                 <td>
                   <button class="btn btn-outline-dark me-1" data-bs-toggle="modal" data-bs-target="#modalEditar" (click)="mapUpdateData(item)">
                     <img src="../../../assets/img/editing.png" width="20px" alt="editar">
@@ -84,7 +84,7 @@
               </div>
               <div class="col-12">
                 <div class="form-check form-switch">
-                  <input class="form-check-input"  formControlName="isComplete" value="false" type="checkbox" role="switch" id="flexSwitchCheckChecked">
+                  <input class="form-check-input"  formControlName="isCompleted" value="false" type="checkbox" role="switch" id="flexSwitchCheckChecked">
                   <label class="form-check-label" for="flexSwitchCheckChecked">Tarea finalizada</label>
                 </div>
               </div>
@@ -133,7 +133,7 @@
               </div>
               <div class="col-12">
                 <div class="form-check form-switch">
-                  <input class="form-check-input"  formControlName="isComplete" value="false" type="checkbox" role="switch" id="flexSwitchCheckChecked">
+                  <input class="form-check-input"  formControlName="isCompleted" value="false" type="checkbox" role="switch" id="flexSwitchCheckChecked">
                   <label class="form-check-label" for="flexSwitchCheckChecked">Tarea finalizada</label>
                 </div>
               </div>
