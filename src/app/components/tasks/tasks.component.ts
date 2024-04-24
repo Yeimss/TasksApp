@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AccountService } from '../../services/account.service';
-import { FullUser, TaskRequest } from '../../models/taskModels/TaskRequest';
+import { TaskRequest } from '../../models/taskModels/TaskRequest';
 import { TasksService } from '../../services/task/tasks.service';
+import { TaskRessponse } from '../../models/taskModels/TaskResponse';
 
 @Component({
   selector: 'app-tasks',
@@ -12,9 +13,10 @@ export class TasksComponent implements OnInit{
   
   constructor(public accountService:AccountService,
     public taskService:TasksService
-  ){}
+  ){ }
+  
   public taskRequest: TaskRequest | undefined 
-
+  public taskResponse: any 
   ngOnInit(): void {
     this.getTasks()
   }
@@ -29,15 +31,18 @@ export class TasksComponent implements OnInit{
   }
 
   getTasks(){
-    let us : FullUser = {
+    let fecha = new Date()
+    let tr : TaskRequest = {
+      title: "",
+      detail: "",
+      dueDate: fecha,
+      isCompleted: false,
       email : this.accountService.getEmail(),
     }
-    let tr : TaskRequest = {
-      user : us
-    }
+
     this.taskService.getTasks(tr).subscribe({
       next: res=>{
-        console.log(res)
+        this.taskResponse=res
       },error:err=>{
         console.log(err)
       }
